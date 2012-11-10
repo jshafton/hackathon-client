@@ -17,7 +17,7 @@ class PusherController < ApplicationController
       :user_id => player_id,
       :user_info => { # => optional - for example
         :name => player_name,
-        :private_channel => "private-#{player_name}"
+        :private_channel => "private-#{Rack::Utils.escape(player_name)}"
       }
     })
   end
