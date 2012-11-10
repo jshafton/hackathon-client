@@ -29,6 +29,7 @@ class App.Views.MainView extends Backbone.View
 
   playerReady: =>
     playerName = App.runtime.currentPlayer.get('name')
+    @$("#playerName").text playerName
     $.cookie PLAYER_NAME_COOKIE, playerName, { expires: 14 }
     @subscribeToPusherEvents()
     playerView = new App.Views.PlayerBoardView()
