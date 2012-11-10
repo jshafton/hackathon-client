@@ -30,4 +30,5 @@ class App.Views.InitialLoadView extends Backbone.View
   save: (event) =>
     event.preventDefault()
     return unless @model.isValid()
+    return unless @model.isValid()
     @trigger 'save'

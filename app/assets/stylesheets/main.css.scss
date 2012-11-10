@@ -7,3 +7,25 @@ body {
     margin-left: 10px;
   }
 }
+
+#playerBoard {
+  div#guessLabel {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px
+  }
+  img {
+    margin-bottom: 15px;
+  }
+  input#playerGuess {
+    width: 325px;
+    margin-left: 5px;
+  }
+  input#guessBtn {
+    vertical-align: top;
+  }
+  div#timeLeftMessage {
+    font-size: 20px;
+    color: red;
+  }
+}

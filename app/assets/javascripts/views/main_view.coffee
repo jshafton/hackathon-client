@@ -34,4 +34,5 @@ class App.Views.MainView extends Backbone.View
     presenceChannel = @pusher.subscribe 'presence-game'
     presenceChannel.bind 'pusher:member_added', (member) =>
       console.log "member #{member.info.name} added"
-    @$("#mainContent").html "there's a round comin up #{playerName}"
+    playerView = new App.Views.PlayerBoardView()
+    @$("#mainContent").html playerView.render().el

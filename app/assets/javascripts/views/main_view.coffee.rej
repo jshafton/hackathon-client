@@ -1,0 +1,10 @@
+diff a/app/assets/javascripts/views/main_view.coffee b/app/assets/javascripts/views/main_view.coffee	(rejected hunks)
+@@ -22,4 +22,6 @@ class App.Views.MainView extends Backbone.View
+     this
+ 
+   showRoundPendingView: =>
+-    @$("#mainContent").html "there's a round comin up #{App.runtime.currentPlayer.get('name')}"
++    playerView = new App.Views.PlayerBoardView()
++    @$("#mainContent").html playerView.render().el
++    #@$("#mainContent").html "there's a round comin up #{App.runtime.currentPlayer.get('name')}"
+\ No newline at end of file
