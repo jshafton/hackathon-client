@@ -29,7 +29,8 @@ class App.Views.MainView extends Backbone.View
   playerReady: =>
     playerName = App.runtime.currentPlayer.get('name')
     $.cookie PLAYER_NAME_COOKIE, playerName, { expires: 14 }
-    Pusher.channel_auth_endpoint = "https://staging.network360.com/pusher/auth/#{encodeURIComponent(playerName)}"
+    Pusher.channel_auth_endpoint = "/pusher/auth_jsonp/#{encodeURIComponent(playerName)}"
+    Pusher.channel_auth_transport = 'jsonp'
     presenceChannel = @pusher.subscribe 'presence-game'
     presenceChannel.bind 'pusher:member_added', (member) =>
       console.log "member #{member.info.name} added"
