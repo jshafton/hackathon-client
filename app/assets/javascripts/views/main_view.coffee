@@ -23,11 +23,10 @@ class App.Views.MainView extends Backbone.View
       initialLoadView.on 'save', @playerReady
       @$("#mainContent").html initialLoadView.render().el
     else
-      @playerReady()
-
+      @waitingArea()
     this
 
-  playerReady: =>
+  waitingArea: =>
     playerName = App.runtime.currentPlayer.get('name')
     @$("#playerName").text playerName
     $.cookie PLAYER_NAME_COOKIE, playerName, { expires: 14 }
@@ -53,21 +52,3 @@ class App.Views.MainView extends Backbone.View
 
     # Presence channel for monitoring member changes
     presenceChannel = @pusher.subscribe 'presence-game'
-    presenceChannel.bind 'pusher:subscription_succeeded', @presenceChannelSubscribed
-    presenceChannel.bind 'pusher:member_added', @playerAdded
-    presenceChannel.bind 'pusher:member_removed', @playerDropped
-
-  presenceChannelSubscribed: (members) =>
-    # Private channel for player-only communications
-    @playerChannel = @pusher.subscribe(members.me.info.private_channel) if members?.me?.info?.private_channel
-
-  playerAdded: (player) =>
-    console.log "player #{player.info.name} added"
-    @serverChannel.trigger 'client-player-added', player
-
-  playerDropped: (player) =>
-    console.log "player #{player.info.name} dropped"
-    @serverChannel.trigger 'client-player-dropped', player
-
-  roundStarted: (eventData) =>
-    console.log "round started - #{eventData}"
