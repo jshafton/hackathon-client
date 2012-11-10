@@ -66,3 +66,4 @@ group :test, :development, :development_caching do
   gem 'growl', :require => nil
 end
 
+gem 'pusher'

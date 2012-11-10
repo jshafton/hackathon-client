@@ -4,4 +4,7 @@ HackathonClient::Application.routes.draw do
   # =================================================
   root :to => 'home#index'
   resources :home, :only => [:index]
+
+  # Pusher endpoint
+  match 'pusher/auth/:player_name' => 'Pusher#auth', :format => "json"
 end
