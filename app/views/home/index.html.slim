@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title Compute Midwest Hackathon
+
+    = stylesheet_link_tag "application"
+    = stylesheet_link_tag "bootstrap"
+    = csrf_meta_tags
+
+  body
+
+    #content
+
+    = javascript_include_tag "vendor"
+
+    coffee:
+      window.App = \
+        Models: {},
+        Views: {},
+        Routers: {}
+
+      ($ document).ready ->
+        new App.Routers.MainRouter()
+        Backbone.history.start()
+
+    = javascript_include_tag "application"
