@@ -35,7 +35,7 @@ class App.Views.MainView extends Backbone.View
     @subscribeToPusherEvents()
 
   showWaitingAreaView: =>
-    @$("#mainContent").html '<h1>Waiting area!</h1>'
+    @$("#mainContent").html HandlebarsTemplates['waiting_area']
 
   subscribeToPusherEvents: =>
     playerName = App.runtime.currentPlayer.get('name')
