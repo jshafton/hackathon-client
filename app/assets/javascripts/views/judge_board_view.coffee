@@ -13,9 +13,19 @@ class App.Views.JudgeBoardView extends App.Views.BaseView
     @$("div#answers").html @answerListView.render().el
     this
 
+  events:
+    "submit #judgeAnswers": "answerSelected"
+
   readyToJudge: (eventData) =>
     @$("input#btnPickAnswer").removeAttr('disabled');
 
   dispose: =>
     @answerListView.dispose() if @answerListView
     super
+
+  answerSelected: (model) =>
+    winningPlayer = $('input[name=answers]:checked', '#judgeAnswers').val()
+    @$("input#btnPickAnswer").addAttr('disabled');
+    App.runtime.channels.player.trigger 'client-judging-submitted',
+      round_id: @model.get('round_id'),
+      winning_player: winningPlayer
