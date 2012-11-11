@@ -14,22 +14,27 @@ div.navbar {
 }
 
 div#playerBoard {
+
+  div#guessLabel {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px
+  }
+
   img#searchImage {
     margin-bottom: 20px;
   }
+
   div#timeLeftMessage {
     font-size: 20px;
     color: red;
   }
+
   div#guessArea {
-    div#guessLabel {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 10px
-    }
+    margin-right: 50px;
+
     input#guess {
       width: 325px;
-      margin-left: 5px;
     }
     input#guessBtn {
       vertical-align: top;
@@ -37,18 +42,33 @@ div#playerBoard {
   }
 
   div#players {
+
+    ul {
+      list-style-type: none;
+      li {
+        margin-bottom: 15px;
+      }
+    }
+
     img.playerProfileImage {
       height: 48px;
       width: 48px;
       float: left;
       display: inline;
+      margin-right: 10px;
     }
+
     div.playerName {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: bold;
     }
-    span.statLabel {
-      font-weight: bold;
+
+    div.stats {
+      line-height: 1;
+      span.statLabel {
+        font-weight: bold;
+        font-size: 12px;
+      }
     }
   }
 }
