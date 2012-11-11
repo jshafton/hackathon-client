@@ -1,60 +1,22 @@
 <div id="playerBoard">
-	<div id="boardHeader">
+  <div id="boardHeader">
     <div id="guessLabel">
-        What google search generated this picture?
+      What search generated this picture?
     </div>
-	</div>
+  </div>
   <div id="guess" class="span6">
     <img id="searchImage" src="{{image_url}}" />
     <div id="guessArea"/>
     <div id="timeLeftMessage">Time Left to Answer: 3 <span id="timeLeftSeconds"></span> Seconds</div>
   </div>
-  <div id="players" class="span4">
+  <div id="participants" class="span4">
     <h4>Judge</h4>
     <div id="judge" class="well player-well">
-      <ul>
-        <li>
-          <img src="https://www.gravatar.com/avatar/35710a15cda119d87df4c571b2e8ac49" class="playerProfileImage"/>
-          <div class="playerName">Lisa</div>
-          <div class="stats">
-            <div class="score">
-              <span class="statLabel">Score:</span> 12
-            </div>
-            <div class="rounds">
-              <span class="statLabel">Rounds Played:</span> 4
-            </div>
-          </div>
-        </li>
-      </ul>
+      <ul id="judgeList"/>
     </div>
     <h4>Players</h4>
-    <div class="well player-well">
-      <ul>
-        <li>
-          <img src="https://www.gravatar.com/avatar/88279024238601aa1ec7c456690c4ea7" class="playerProfileImage"/>
-          <div class="playerName">Crusty</div>
-          <div class="stats">
-            <div class="score">
-              <span class="statLabel">Score:</span> 67
-            </div>
-            <div class="rounds">
-              <span class="statLabel">Rounds Played:</span> 13
-            </div>
-          </div>
-        </li>
-        <li>
-          <img src="https://www.gravatar.com/avatar/4b50f945d31d0e89fe03ef63ea2f548a" class="playerProfileImage"/>
-          <div class="playerName">ShaftJac</div>
-          <div class="stats">
-            <div class="score">
-              <span class="statLabel">Score:</span> 612
-            </div>
-            <div class="rounds">
-              <span class="statLabel">Rounds Played:</span> 97
-            </div>
-          </div>
-        </li>
-      </ul>
+    <div id="players" class="well player-well">
+      <ul id="playerList"/>
     </div>
   </div>
 </div>
