@@ -18,6 +18,7 @@ class App.Views.MainView extends Backbone.View
 
     # todo - flex this based on whether the user is logged in
     unless App.runtime.currentPlayer?
+      @$("#header").hide()
       playerModel = App.runtime.currentPlayer = new App.Models.Player()
       initialLoadView = new App.Views.InitialLoadView(model: playerModel)
       initialLoadView.on 'save', @playerReady
@@ -36,6 +37,7 @@ class App.Views.MainView extends Backbone.View
   playerReady: =>
     @$("#playerName").text App.runtime.currentPlayer.get('name')
     $.cookie PLAYER_DATA_COOKIE, JSON.stringify(App.runtime.currentPlayer.toJSON()), { expires: 14 }
+    @$("#header").show()
     @showWaitingAreaView()
     @subscribeToPusherEvents()
 
