@@ -23,12 +23,3 @@ test:
   pool: 5
   username: network360
   password: network360
-
-production:
-  adapter: postgresql
-  encoding: unicode
-  host:     localhost
-  database: hackathon
-  pool: 5
-  username: network360
-  password: network360
