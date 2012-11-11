@@ -3,7 +3,7 @@ App.Views ||= {}
 class App.Views.MainView extends Backbone.View
   PLAYER_NAME_COOKIE     = "player_name"
   API_KEY                = '6a4677394df2ac8f08d2'
-  PUBLIC_CHANNEL         = 'public-channel'
+  PUBLIC_CHANNEL         = 'public'
   PRIVATE_SERVER_CHANNEL = 'private-server'
   ROUND_START_EVENT      = 'gamestartround'
 
