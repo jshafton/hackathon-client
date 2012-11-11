@@ -30,27 +30,30 @@ div.navbar {
   }
 }
 
-div#playerBoard {
-
-  div#boardHeader {
-    div#guessLabel {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 10px
-    }
+div#boardHeader {
+  div.boardSubheader {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px
   }
+}
+
+div#guess {
+  margin-left: 0px;
+  img#searchImage {
+    margin-bottom: 20px;
+  }
+}
+
+div#timeLeftMessage {
+  font-size: 20px;
+  color: red;
+}
+
+div#playerBoard {
 
   div#guess {
     margin-left: 0px;
-
-    img#searchImage {
-      margin-bottom: 20px;
-    }
-
-    div#timeLeftMessage {
-      font-size: 20px;
-      color: red;
-    }
 
     div#guessArea {
       margin-right: 50px;
@@ -98,5 +101,12 @@ div#playerBoard {
         font-size: 12px;
       }
     }
+  }
+}
+
+div#judgeBoard {
+  div#answers > ul {
+    list-style-type: none;
+    margin-left: 0px;
   }
 }
