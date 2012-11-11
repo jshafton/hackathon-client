@@ -13,19 +13,6 @@ class App.Views.InitialLoadView extends Backbone.View
 
   events:
     "submit #nameForm": "save"
-    "keypress #name":   "handleKeypress"
-
-  handleKeypress: (event) ->
-    # Submit form on enter key (char 13)
-    return unless event.which == 13
-    event.preventDefault()
-
-    # Hack to explicitly update the model, since the enter key won't trigger
-    # a change event.
-    @model.set "name", @$("#name").val()
-
-    @$("#nameForm").submit()
-    return false
 
   save: (event) =>
     event.preventDefault()

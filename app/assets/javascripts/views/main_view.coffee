@@ -1,15 +1,15 @@
 App.Views ||= {}
 
 class App.Views.MainView extends Backbone.View
-  PLAYER_NAME_COOKIE     = "player_name"
+  PLAYER_DATA_COOKIE     = "player_data"
   API_KEY                = '6a4677394df2ac8f08d2'
   PUBLIC_CHANNEL         = 'public'
   PRIVATE_SERVER_CHANNEL = 'private-server'
-  ROUND_START_EVENT      = 'gamestartround'
+  ROUND_START_EVENT      = 'game-round-started'
 
   initialize: ->
-    playerNameCookie = $.cookie(PLAYER_NAME_COOKIE)
-    App.runtime.currentPlayer = new App.Models.Player(name: playerNameCookie) if playerNameCookie
+    playerDataCookie = $.cookie(PLAYER_DATA_COOKIE)
+    App.runtime.currentPlayer = new App.Models.Player(JSON.parse(playerDataCookie)) if playerDataCookie
     super
 
   render: =>
@@ -28,9 +28,8 @@ class App.Views.MainView extends Backbone.View
     this
 
   playerReady: =>
-    playerName = App.runtime.currentPlayer.get('name')
-    @$("#playerName").text playerName
-    $.cookie PLAYER_NAME_COOKIE, playerName, { expires: 14 }
+    @$("#playerName").text App.runtime.currentPlayer.get('name')
+    $.cookie PLAYER_DATA_COOKIE, JSON.stringify(App.runtime.currentPlayer.toJSON()), { expires: 14 }
     @showWaitingAreaView()
     @subscribeToPusherEvents()
 
@@ -39,9 +38,10 @@ class App.Views.MainView extends Backbone.View
 
   subscribeToPusherEvents: =>
     playerName = App.runtime.currentPlayer.get('name')
+    playerEmail = App.runtime.currentPlayer.get('email')
 
     # Set up authentication using our bougs authenticator
-    Pusher.channel_auth_endpoint = "/pusher/auth_jsonp/#{encodeURIComponent(playerName)}"
+    Pusher.channel_auth_endpoint = "/pusher/auth_jsonp/#{encodeURIComponent(playerName)}/#{encodeURIComponent(playerEmail)}"
     Pusher.channel_auth_transport = 'jsonp'
 
     @pusher = new Pusher(API_KEY)
@@ -72,7 +72,7 @@ class App.Views.MainView extends Backbone.View
     @serverChannel.trigger 'client-player-dropped', player
 
   roundStarted: (eventData) =>
-    console.log "round started - #{eventData}"
+    console.log "round started - #{JSON.stringify(eventData)}"
     roundStartedModel = new App.Models.RoundStarted(eventData)
     playerView = new App.Views.PlayerBoardView(model: roundStartedModel)
     @$("#mainContent").html playerView.render().el
