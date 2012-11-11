@@ -27,6 +27,12 @@ class App.Views.MainView extends Backbone.View
 
     this
 
+  events:
+    "click .brand": "clickBrand"
+
+  clickBrand: (event) =>
+    event.preventDefault()
+
   playerReady: =>
     @$("#playerName").text App.runtime.currentPlayer.get('name')
     $.cookie PLAYER_DATA_COOKIE, JSON.stringify(App.runtime.currentPlayer.toJSON()), { expires: 14 }

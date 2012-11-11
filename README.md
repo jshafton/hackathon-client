@@ -90,11 +90,11 @@ Sample JSON:
 
 Guess submitted
 ---------------
-Triggered by: `web`
+Triggered by: `server`
 
 Channel: `public`
 
-Event name: `client-guess-submitted`
+Event name: `game-guess-submitted`
 
 Sample JSON:
 
