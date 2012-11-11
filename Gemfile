@@ -4,7 +4,7 @@ gem 'rails', '3.1.3'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
-gem 'pg'
+gem 'sqlite3'
 
 # Format templates with the awesome Slim template engine
 gem 'slim'
