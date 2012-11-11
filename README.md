@@ -63,12 +63,12 @@ Sample JSON:
 
     {
       "round_id": "xxx",
-      "image_url": "xxx",
+      "image_url": "http://www.bestapples.com/images/homePhotoCrippsPink.jpg",
       "players":
         [
-          { "name": "player 1", "type": "player", "current_score": 50, "rounds_played": 2, "gravatar_url": "xxx" },
-          { "name": "player 2", "type": "judge", "current_score": 30, "rounds_played": 8, "gravatar_url": "xxx" },
-          { "name": "player 3", "type": "player", "current_score": 52, "rounds_played": 6, "gravatar_url": "xxx" }
+          { "name": "player 1", "type": "player", "current_score": 50, "rounds_played": 2, "gravatar_url": "https://www.gravatar.com/avatar/35710a15cda119d87df4c571b2e8ac49" },
+          { "name": "player 2", "type": "judge", "current_score": 30, "rounds_played": 8, "gravatar_url": "https://www.gravatar.com/avatar/88279024238601aa1ec7c456690c4ea7" },
+          { "name": "player 3", "type": "player", "current_score": 52, "rounds_played": 6, "gravatar_url": "https://www.gravatar.com/avatar/43212155451c89cf327415f4df300b9d" }
         ]
     }
 

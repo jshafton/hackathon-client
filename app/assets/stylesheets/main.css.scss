@@ -14,25 +14,25 @@ div.navbar {
 }
 
 div#playerBoard {
-  div#guess {
+  img#searchImage {
+    margin-bottom: 20px;
+  }
+  div#timeLeftMessage {
+    font-size: 20px;
+    color: red;
+  }
+  div#guessArea {
     div#guessLabel {
       font-size: 22px;
       font-weight: bold;
       margin-bottom: 10px
     }
-    img {
-      margin-bottom: 15px;
-    }
-    input#playerGuess {
+    input#guess {
       width: 325px;
       margin-left: 5px;
     }
     input#guessBtn {
       vertical-align: top;
-    }
-    div#timeLeftMessage {
-      font-size: 20px;
-      color: red;
     }
   }
 

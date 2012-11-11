@@ -44,32 +44,33 @@ class App.Views.MainView extends Backbone.View
     Pusher.channel_auth_endpoint = "/pusher/auth_jsonp/#{encodeURIComponent(playerName)}/#{encodeURIComponent(playerEmail)}"
     Pusher.channel_auth_transport = 'jsonp'
 
-    @pusher = new Pusher(API_KEY)
+    App.runtime.pusher = new Pusher(API_KEY)
+    App.runtime.channels ||= {}
 
     # Public channel, for listening to global events
-    @publicChannel = @pusher.subscribe(PUBLIC_CHANNEL)
-    @publicChannel.bind ROUND_START_EVENT, @roundStarted
+    App.runtime.channels.public = App.runtime.pusher.subscribe(PUBLIC_CHANNEL)
+    App.runtime.channels.public.bind ROUND_START_EVENT, @roundStarted
 
     # Private communication w/ the server since they don't support presence channels
-    @serverChannel = @pusher.subscribe(PRIVATE_SERVER_CHANNEL)
+    App.runtime.channels.server = App.runtime.pusher.subscribe(PRIVATE_SERVER_CHANNEL)
 
     # Presence channel for monitoring member changes
-    presenceChannel = @pusher.subscribe 'presence-game'
-    presenceChannel.bind 'pusher:subscription_succeeded', @presenceChannelSubscribed
-    presenceChannel.bind 'pusher:member_added', @playerAdded
-    presenceChannel.bind 'pusher:member_removed', @playerDropped
+    App.runtime.channels.presence = App.runtime.pusher.subscribe 'presence-game'
+    App.runtime.channels.presence.bind 'pusher:subscription_succeeded', @presenceChannelSubscribed
+    App.runtime.channels.presence.bind 'pusher:member_added', @playerAdded
+    App.runtime.channels.presence.bind 'pusher:member_removed', @playerDropped
 
   presenceChannelSubscribed: (members) =>
     # Private channel for player-only communications
-    @playerChannel = @pusher.subscribe(members.me.info.private_channel) if members?.me?.info?.private_channel
+    App.runtime.channels.player = App.runtime.pusher.subscribe(members.me.info.private_channel) if members?.me?.info?.private_channel
 
   playerAdded: (player) =>
     console.log "player #{player.info.name} added"
-    @serverChannel.trigger 'client-player-added', player
+    App.runtime.channels.server.trigger 'client-player-added', player
 
   playerDropped: (player) =>
     console.log "player #{player.info.name} dropped"
-    @serverChannel.trigger 'client-player-dropped', player
+    App.runtime.channels.server.trigger 'client-player-dropped', player
 
   roundStarted: (eventData) =>
     console.log "round started - #{JSON.stringify(eventData)}"
