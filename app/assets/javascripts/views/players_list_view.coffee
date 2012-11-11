@@ -4,11 +4,12 @@ class App.Views.PlayerListView extends App.Views.BaseView
   tagName: 'ul'
 
   initialize: =>
-    App.runtime.channels.public.bind 'game-guess-submitted', @guessSubmitted
-    App.runtime.channels.presence.bind 'pusher:member_removed', @playerDropped
+    @bindToPusherEvent App.runtime.channels.public, 'game-guess-submitted', @guessSubmitted
+    @bindToPusherEvent App.runtime.channels.presence, 'pusher:member_removed', @playerDropped
 
   render: =>
     @$el.html ''
+    @unbindFrom @collection, 'change'
     for model in @collection.models
       @$el.append HandlebarsTemplates['player_board_item'](model.toJSON())
     @bindTo @collection, 'change', @render
@@ -20,8 +21,3 @@ class App.Views.PlayerListView extends App.Views.BaseView
 
   playerDropped: (eventData) =>
     @collection.remove(model) for model in @collection.models when model.get('name') == eventData.player
-
-  dispose: =>
-    App.runtime.channels.public.unbind 'game-guess-submitted'
-    App.runtime.channels.presence.unbind 'pusher:member_removed'
-    super

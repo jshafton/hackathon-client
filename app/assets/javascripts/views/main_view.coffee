@@ -65,16 +65,16 @@ class App.Views.MainView extends App.Views.BaseView
 
     # Public channel, for listening to global events
     App.runtime.channels.public = App.runtime.pusher.subscribe(PUBLIC_CHANNEL)
-    App.runtime.channels.public.bind ROUND_START_EVENT, @roundStarted
+    @bindToPusherEvent App.runtime.channels.public, ROUND_START_EVENT, @roundStarted
 
     # Private communication w/ the server since they don't support presence channels
     App.runtime.channels.server = App.runtime.pusher.subscribe(PRIVATE_SERVER_CHANNEL)
 
     # Presence channel for monitoring member changes
     App.runtime.channels.presence = App.runtime.pusher.subscribe 'presence-game'
-    App.runtime.channels.presence.bind 'pusher:subscription_succeeded', @presenceChannelSubscribed
-    App.runtime.channels.presence.bind 'pusher:member_added', @playerAdded
-    App.runtime.channels.presence.bind 'pusher:member_removed', @playerDropped
+    @bindToPusherEvent App.runtime.channels.presence, 'pusher:subscription_succeeded', @presenceChannelSubscribed
+    @bindToPusherEvent App.runtime.channels.presence, 'pusher:member_added', @playerAdded
+    @bindToPusherEvent App.runtime.channels.presence, 'pusher:member_removed', @playerDropped
 
   presenceChannelSubscribed: (members) =>
     # Private channel for player-only communications
@@ -94,7 +94,7 @@ class App.Views.MainView extends App.Views.BaseView
     roundStartedModel = new App.Models.RoundStarted(eventData)
     judge = roundStartedModel.getJudgesCollection().first()
     if judge.attributes["name"] == @currentPlayer
-      @judgeView.dispose() if @playerView
+      @judgeView.dispose() if @judgeView
       @judgeView = new App.Views.JudgeBoardView(model: roundStartedModel)
       @$("#mainContent").html @judgeView.render().el
     else
@@ -103,10 +103,11 @@ class App.Views.MainView extends App.Views.BaseView
       @$("#mainContent").html @playerView.render().el
 
   dispose: =>
-    App.runtime.pusher.unsubscribe(PUBLIC_CHANNEL)
-    App.runtime.pusher.unsubscribe(PRIVATE_SERVER_CHANNEL)
-    App.runtime.pusher.unsubscribe('presence-game')
-    App.runtime.Pusher.disconnect() if App.runtime.Pusher
+    if App.runtime.Pusher
+      App.runtime.pusher.unsubscribe(PUBLIC_CHANNEL)
+      App.runtime.pusher.unsubscribe(PRIVATE_SERVER_CHANNEL)
+      App.runtime.pusher.unsubscribe('presence-game')
+      App.runtime.Pusher.disconnect()
     @initialLoadView.dispose() if @initialLoadView
     @playerView.dispose() if @playerView
     super
