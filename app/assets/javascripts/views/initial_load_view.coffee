@@ -1,6 +1,6 @@
 App.Views ||= {}
 
-class App.Views.InitialLoadView extends Backbone.View
+class App.Views.InitialLoadView extends App.Views.BaseView
   initialize: ->
     Backbone.Validation.bind this, forceUpdate: true
     super

@@ -1,6 +1,9 @@
 App.Models ||= {}
 
 class App.Models.Player extends Backbone.Model
+  defaults:
+    "status": "Enjoying the view"
+
   validation:
     name:
       required: true

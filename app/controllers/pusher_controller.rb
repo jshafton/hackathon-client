@@ -16,7 +16,8 @@ class PusherController < ApplicationController
     player_email = params[:player_email]
 
     if player_email
-      hash = Digest::MD5.hexdigest(player_email)
+      player_email = player_email.strip.downcase
+      hash = ::Digest::MD5.hexdigest(player_email)
       gravatar_url = "https://www.gravatar.com/avatar/#{hash}"
     end
 

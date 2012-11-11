@@ -9,5 +9,6 @@ class App.Routers.MainRouter extends Backbone.Router
     "!/": "home"
 
   home: ->
-    view = new App.Views.MainView()
-    $(MAIN_CONTENT_DIV).html view.render().el
+    @mainView.dispose() if @mainView
+    @mainView = new App.Views.MainView()
+    $(MAIN_CONTENT_DIV).html @mainView.render().el

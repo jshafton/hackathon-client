@@ -1,6 +1,6 @@
 App.Views ||= {}
 
-class App.Views.SubmitGuessView extends Backbone.View
+class App.Views.SubmitGuessView extends App.Views.BaseView
   initialize: ->
     Backbone.Validation.bind this, forceUpdate: true
     super

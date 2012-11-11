@@ -1,6 +1,6 @@
 App.Views ||= {}
 
-class App.Views.MainView extends Backbone.View
+class App.Views.MainView extends App.Views.BaseView
   PLAYER_DATA_COOKIE     = "player_data"
   API_KEY                = '6a4677394df2ac8f08d2'
   PUBLIC_CHANNEL         = 'public'
@@ -20,8 +20,8 @@ class App.Views.MainView extends Backbone.View
     unless App.runtime.currentPlayer?
       @$("#header").hide()
       playerModel = App.runtime.currentPlayer = new App.Models.Player()
-      initialLoadView = new App.Views.InitialLoadView(model: playerModel)
-      initialLoadView.on 'save', @playerReady
+      @initialLoadView = new App.Views.InitialLoadView(model: playerModel)
+      @bindTo initialLoadView, 'save', @playerReady
       @$("#mainContent").html initialLoadView.render().el
     else
       @playerReady()
@@ -50,10 +50,17 @@ class App.Views.MainView extends Backbone.View
     playerEmail = App.runtime.currentPlayer.get('email')
 
     # Set up authentication using our bougs authenticator
-    Pusher.channel_auth_endpoint = "/pusher/auth_jsonp/#{encodeURIComponent(playerName)}/#{encodeURIComponent(playerEmail)}"
+    Pusher.channel_auth_endpoint = "/pusher/auth_jsonp"
     Pusher.channel_auth_transport = 'jsonp'
+    options =
+      auth:
+        params:
+          player_email: playerEmail
+          player_name: playerName
+    #Pusher.log = (msg) =>
+      #console.log "PUSHER - #{JSON.stringify(msg)}"
 
-    App.runtime.pusher = new Pusher(API_KEY)
+    App.runtime.pusher = new Pusher(API_KEY, options)
     App.runtime.channels ||= {}
 
     # Public channel, for listening to global events
@@ -71,7 +78,8 @@ class App.Views.MainView extends Backbone.View
 
   presenceChannelSubscribed: (members) =>
     # Private channel for player-only communications
-    App.runtime.channels.player = App.runtime.pusher.subscribe(members.me.info.private_channel) if members?.me?.info?.private_channel
+    if members?.me?.info?.private_channel
+      App.runtime.channels.player = App.runtime.pusher.subscribe(members.me.info.private_channel)
 
   playerAdded: (player) =>
     console.log "player #{player.info.name} added"
@@ -86,8 +94,19 @@ class App.Views.MainView extends Backbone.View
     roundStartedModel = new App.Models.RoundStarted(eventData)
     judge = roundStartedModel.getJudgesCollection().first()
     if judge.attributes["name"] == @currentPlayer
-      judgeView = new App.Views.JudgeBoardView(model: roundStartedModel)
-      @$("#mainContent").html judgeView.render().el
+      @judgeView.dispose() if @playerView
+      @judgeView = new App.Views.JudgeBoardView(model: roundStartedModel)
+      @$("#mainContent").html @judgeView.render().el
     else
-      playerView = new App.Views.PlayerBoardView(model: roundStartedModel)
-      @$("#mainContent").html playerView.render().el
+      @playerView.dispose() if @playerView
+      @playerView = new App.Views.PlayerBoardView(model: roundStartedModel)
+      @$("#mainContent").html @playerView.render().el
+
+  dispose: =>
+    App.runtime.pusher.unsubscribe(PUBLIC_CHANNEL)
+    App.runtime.pusher.unsubscribe(PRIVATE_SERVER_CHANNEL)
+    App.runtime.pusher.unsubscribe('presence-game')
+    App.runtime.Pusher.disconnect() if App.runtime.Pusher
+    @initialLoadView.dispose() if @initialLoadView
+    @playerView.dispose() if @playerView
+    super
