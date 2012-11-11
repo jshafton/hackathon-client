@@ -119,16 +119,17 @@ Sample JSON:
         [
           { "name": "player 1", "type": "player", "current_score": 50, "rounds_played": 2, "gravatar_url": "xxx", "guess": "Super guess 1" },
           { "name": "player 3", "type": "player", "current_score": 52, "rounds_played": 6, "gravatar_url": "xxx" , "guess": "Super guess 3" }
-        ]
+        ],
+      "actual_search": "search this!"
     }
 
-Judging complete
+Judging submitted
 ----------------
-Triggered by: `web`
+Triggered by: `server`
 
 Channel: `public`
 
-Event name: `client-judging-completed`
+Event name: `client-judging-submitted`
 
 Sample JSON:
 
@@ -137,8 +138,24 @@ Sample JSON:
       "winning_player": "player 1"
     }
 
-Judging ready
--------------
+Judging complete
+----------------
+Triggered by: `server`
+
+Channel: `public`
+
+Event name: `game-judging-completed`
+
+Sample JSON:
+
+    {
+      "round_id": "xxx",
+      "winning_player": "player 1",
+      "actual_search": "search this!"
+    }
+
+Round completed
+---------------
 Triggered by: `server`
 
 Channel: `public`
@@ -154,5 +171,6 @@ Sample JSON:
         [
           { "name": "player 1", "type": "player", "current_score": 55, "rounds_played": 2, "gravatar_url": "xxx", "guess": "Super guess 1" },
           { "name": "player 3", "type": "player", "current_score": 52, "rounds_played": 6, "gravatar_url": "xxx" , "guess": "Super guess 3" }
-        ]
+        ],
+      "actual_search": "search this!"
     }
