@@ -1,1 +1,24 @@
-<div>Judge</div>
+<div id="playerBoard">
+  <div id="boardHeader">
+    <div id="guessLabel">
+        What google search generated this picture?
+    </div>
+  </div>
+  <div id="guess" class="span6">
+    <img id="searchImage" src="{{image_url}}" />
+    <div id="timeLeftMessage">Time Left to Answer: 3 <span id="timeLeftSeconds"></span> Seconds</div>
+  </div>
+  <div id="players" class="span4">
+    <h4>Player Answers</h4>
+    <div class="well player-well">
+      <label class="radio">
+        <input type="radio" name="answers" id="rball-answer" value="1" checked>
+        How do I lick my own balls?
+      </label>
+      <label class="radio">
+        <input type="radio" name="answers" id="shafjac-answer" value="2" checked>
+        Do I have VD?
+      </label>
+    </div>
+  </div>
+</div>

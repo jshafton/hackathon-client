@@ -35,7 +35,8 @@ class App.Views.MainView extends Backbone.View
     event.preventDefault()
 
   playerReady: =>
-    @$("#playerName").text App.runtime.currentPlayer.get('name')
+    @currentPlayer = App.runtime.currentPlayer.get('name')
+    @$("#playerName").text @currentPlayer
     $.cookie PLAYER_DATA_COOKIE, JSON.stringify(App.runtime.currentPlayer.toJSON()), { expires: 14 }
     @$("#header").show()
     @showWaitingAreaView()
@@ -83,5 +84,10 @@ class App.Views.MainView extends Backbone.View
   roundStarted: (eventData) =>
     console.log "round started - #{JSON.stringify(eventData)}"
     roundStartedModel = new App.Models.RoundStarted(eventData)
-    playerView = new App.Views.PlayerBoardView(model: roundStartedModel)
-    @$("#mainContent").html playerView.render().el
+    judge = roundStartedModel.getJudgesCollection().first()
+    if judge.attributes["name"] == @currentPlayer
+      judgeView = new App.Views.JudgeBoardView(model: roundStartedModel)
+      @$("#mainContent").html judgeView.render().el
+    else
+      playerView = new App.Views.PlayerBoardView(model: roundStartedModel)
+      @$("#mainContent").html playerView.render().el
