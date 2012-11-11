@@ -21,8 +21,8 @@ class App.Views.MainView extends App.Views.BaseView
       @$("#header").hide()
       playerModel = App.runtime.currentPlayer = new App.Models.Player()
       @initialLoadView = new App.Views.InitialLoadView(model: playerModel)
-      @bindTo initialLoadView, 'save', @playerReady
-      @$("#mainContent").html initialLoadView.render().el
+      @bindTo @initialLoadView, 'save', @playerReady
+      @$("#mainContent").html @initialLoadView.render().el
     else
       @playerReady()
 
