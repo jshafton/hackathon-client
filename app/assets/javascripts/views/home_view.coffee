@@ -1,12 +1,12 @@
 App.Views ||= {}
 
-class App.Views.InitialLoadView extends App.Views.BaseView
+class App.Views.HomeView extends App.Views.BaseView
   initialize: ->
     Backbone.Validation.bind this, forceUpdate: true
     super
 
-  render: ->
-    @$el.html HandlebarsTemplates['initial_load']
+  render: =>
+    @$el.html HandlebarsTemplates['home']
     @modelBinder = new Backbone.ModelBinder()
     @modelBinder.bind @model, @el
     this
@@ -17,4 +17,5 @@ class App.Views.InitialLoadView extends App.Views.BaseView
   save: (event) =>
     event.preventDefault()
     return unless @model.isValid(true)
-    @trigger 'save'
+    $.cookie App.Routers.MainRouter.PLAYER_DATA_COOKIE, JSON.stringify(@model.toJSON()), { expires: 14 }
+    Backbone.history.navigate '!/play', trigger: true

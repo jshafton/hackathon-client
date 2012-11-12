@@ -1,49 +1,20 @@
 App.Views ||= {}
 
 class App.Views.MainView extends App.Views.BaseView
-  PLAYER_DATA_COOKIE     = "player_data"
   API_KEY                = '6a4677394df2ac8f08d2'
   PUBLIC_CHANNEL         = 'public'
   PRIVATE_SERVER_CHANNEL = 'private-server'
   ROUND_START_EVENT      = 'game-round-started'
 
-  initialize: ->
-    playerDataCookie = $.cookie(PLAYER_DATA_COOKIE)
-    App.runtime.currentPlayer = new App.Models.Player(JSON.parse(playerDataCookie)) if playerDataCookie
+  initialize: =>
+    Backbone.history.navigate("/", trigger: true) unless App.runtime.currentPlayer?
+    @currentPlayer = App.runtime.currentPlayer.get('name')
+    @subscribeToPusherEvents()
     super
 
   render: =>
-    @$el.html HandlebarsTemplates['main']
-    @$("#header").html HandlebarsTemplates['header']
-
-    # todo - flex this based on whether the user is logged in
-    unless App.runtime.currentPlayer?
-      @$("#header").hide()
-      playerModel = App.runtime.currentPlayer = new App.Models.Player()
-      @initialLoadView = new App.Views.InitialLoadView(model: playerModel)
-      @bindTo initialLoadView, 'save', @playerReady
-      @$("#mainContent").html initialLoadView.render().el
-    else
-      @playerReady()
-
+    @$el.html HandlebarsTemplates['waiting_area']
     this
-
-  events:
-    "click .brand": "clickBrand"
-
-  clickBrand: (event) =>
-    event.preventDefault()
-
-  playerReady: =>
-    @currentPlayer = App.runtime.currentPlayer.get('name')
-    @$("#playerName").text @currentPlayer
-    $.cookie PLAYER_DATA_COOKIE, JSON.stringify(App.runtime.currentPlayer.toJSON()), { expires: 14 }
-    @$("#header").show()
-    @showWaitingAreaView()
-    @subscribeToPusherEvents()
-
-  showWaitingAreaView: =>
-    @$("#mainContent").html HandlebarsTemplates['waiting_area']
 
   subscribeToPusherEvents: =>
     playerName = App.runtime.currentPlayer.get('name')
@@ -96,11 +67,11 @@ class App.Views.MainView extends App.Views.BaseView
     if judge.attributes["name"] == @currentPlayer
       @judgeView.dispose() if @judgeView
       @judgeView = new App.Views.JudgeBoardView(model: roundStartedModel)
-      @$("#mainContent").html @judgeView.render().el
+      $("#mainContent").html @judgeView.render().el
     else
       @playerView.dispose() if @playerView
       @playerView = new App.Views.PlayerBoardView(model: roundStartedModel)
-      @$("#mainContent").html @playerView.render().el
+      $("#mainContent").html @playerView.render().el
 
   dispose: =>
     if App.runtime.Pusher
