@@ -43,8 +43,8 @@ class App.Routers.MainRouter extends Backbone.Router
     $(HEADER_DIV).html @currentHeaderView.render().el
 
   home: =>
-    playerModel = App.runtime.currentPlayer = new App.Models.Player()
-    @_showView(new App.Views.HomeView(model: playerModel))
+    App.runtime.currentPlayer = new App.Models.Player() unless App.runtime.currentPlayer
+    @_showView(new App.Views.HomeView(model: App.runtime.currentPlayer))
 
   play: =>
     @_showView(new App.Views.MainView())
