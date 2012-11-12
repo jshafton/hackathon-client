@@ -30,9 +30,6 @@ gem 'jquery-rails'
 # color log output
 gem 'colorize'
 
-# SASS implementation of Twitter's Bootstrap
-gem 'bootstrap-sass', '~> 2.0.4'
-
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
