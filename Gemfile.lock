@@ -261,7 +261,7 @@ DEPENDENCIES
   rb-fsevent
   rspec-rails (~> 2.6)
   ruby_gntp
-  sass-rails (~> 3.1.5)
+  sass-rails (~> 3.1.4)
   slim
   spork
   sqlite3
