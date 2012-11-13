@@ -37,7 +37,9 @@ gem 'colorize'
 # gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano', :require => nil
+gem 'capistrano-ext', :require => nil
+gem 'capistrano_colors', :require => nil
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
