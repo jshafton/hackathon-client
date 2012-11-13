@@ -42,6 +42,20 @@ module HackathonClient
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    # Precompile all JS/CSS/etc except files starting with _
+    config.assets.precompile = [ Proc.new { |path|
+        # ignores any filename that begins with '_' (e.g. sass partials)
+        # all other css/js/sass/image files are processed
+        if File.basename(path) =~ /^[^_].*\.\w+$/
+          puts "Compiling: #{path}"
+          true
+        else
+          puts "Ignoring: #{path}"
+          false
+        end
+      }
+    ]
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
   end
