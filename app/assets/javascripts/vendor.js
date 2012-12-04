@@ -16,3 +16,4 @@
 //= require backbone
 //= require backbone-modelbinder
 //= require backbone-validation
+//= require pusher
