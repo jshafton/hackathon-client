@@ -40,6 +40,8 @@ gem 'colorize'
 gem 'capistrano', :require => nil
 gem 'capistrano-ext', :require => nil
 gem 'capistrano_colors', :require => nil
+gem 'capistrano-deploytags', :require => nil
+gem 'capistrano-detect-migrations', :require => nil
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'

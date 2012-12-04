@@ -40,6 +40,13 @@ GEM
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
+    capistrano-deploytags (0.7.0)
+      capistrano
+      capistrano-ext
+    capistrano-detect-migrations (0.6.2)
+      capistrano
+      capistrano-deploytags
+      capistrano-ext
     capistrano-ext (1.2.1)
       capistrano (>= 1.0.0)
     capistrano_colors (0.5.5)
@@ -238,6 +245,8 @@ PLATFORMS
 DEPENDENCIES
   awesome_print
   capistrano
+  capistrano-deploytags
+  capistrano-detect-migrations
   capistrano-ext
   capistrano_colors
   coffee-rails (~> 3.1.1)
